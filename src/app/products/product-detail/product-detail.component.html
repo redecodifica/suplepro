@@ -1,0 +1,8 @@
+<app-header [breadcrumb]="product?.nombre" [title]="product?.nombre"></app-header>
+<div *ngIf="product">
+    <h2>{{ product.nombre }}</h2>
+    <p>Precio: {{ product.precio | currency }}</p>
+    <p>Stock: {{ product.stock }}</p>
+    <p>Categoría: {{ product.metaData.categoria }}</p>
+    <p>Estado: {{ product.estado }}</p>
+</div>
