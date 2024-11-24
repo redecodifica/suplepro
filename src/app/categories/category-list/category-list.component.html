@@ -1,0 +1,8 @@
+<div class="category-list">
+    <h2>Categorías Disponibles</h2>
+    <ul>
+      <li *ngFor="let category of categories">
+        <a [routerLink]="['/tienda/categoria', category.slug]">{{ category.nombre }}</a>
+      </li>
+    </ul>
+  </div>
