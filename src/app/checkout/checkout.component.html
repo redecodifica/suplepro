@@ -1,0 +1,67 @@
+<app-header breadcrumb="Checkout" title="Checkout"></app-header>
+<div class="container mt-5 padding-container">
+    <h2>Dirección de Facturación y Envío</h2>
+    <form (ngSubmit)="createOrder()">
+      <div class="form-group">
+        <label for="calle">Calle</label>
+        <input type="text" id="calle" class="form-control" [(ngModel)]="shippingAddress.calle" name="calle" required>
+        <div *ngIf="!shippingAddress.calle && formSubmitted" class="text-danger">
+          La calle es obligatoria.
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        <label for="numero">Número</label>
+        <input type="text" id="numero" class="form-control" [(ngModel)]="shippingAddress.numero" name="numero" required>
+        <div *ngIf="!shippingAddress.numero && formSubmitted" class="text-danger">
+          El número es obligatorio.
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        <label for="distrito">Distrito</label>
+        <input type="text" id="distrito" class="form-control" [(ngModel)]="shippingAddress.distrito" name="distrito" required>
+        <div *ngIf="!shippingAddress.distrito && formSubmitted" class="text-danger">
+          El distrito es obligatorio.
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        <label for="provincia">Provincia</label>
+        <input type="text" id="provincia" class="form-control" [(ngModel)]="shippingAddress.provincia" name="provincia" required>
+        <div *ngIf="!shippingAddress.provincia && formSubmitted" class="text-danger">
+          La provincia es obligatoria.
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        <label for="pais">País</label>
+        <input type="text" id="pais" class="form-control" [(ngModel)]="shippingAddress.pais" name="pais" required>
+        <div *ngIf="!shippingAddress.pais && formSubmitted" class="text-danger">
+          El país es obligatorio.
+        </div>
+      </div>
+      
+      <h2 class="mt-5">Resumen del Pedido</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of cartItems">
+            <td>{{ item.nombre }}</td>
+            <td>{{ item.precio | currency }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.precio * item.quantity | currency }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="text-right">
+        <h3>Total: {{ total | currency }}</h3>
+        <button type="submit" class="btn btn-primary mt-3" [disabled]="!isShippingAddressValid() || cartItems.length === 0">
+          Confirmar y Pagar
+        </button>
+      </div>
+    </form>
+</div>

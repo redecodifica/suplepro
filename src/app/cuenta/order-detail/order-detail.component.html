@@ -1,0 +1,30 @@
+<app-header breadcrumb="Detalles de la Orden" title="Detalles de la Orden"></app-header>
+<div class="container mt-5 padding-container">
+  <h2>Detalles del Pedido</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let detail of orderDetails">
+        <td>{{ detail.producto.nombre }}</td>
+        <td>{{ detail.producto.precio | currency: 'PEN': 'symbol' }}</td>
+        <td>{{ detail.cantidad }}</td>
+        <td>{{ (detail.precio * detail.cantidad) | currency: 'PEN': 'symbol' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="text-right">
+    <h3 *ngIf="orderDetails.length > 0">
+      Total: {{ orderDetails[0].pedido.total | currency: 'PEN': 'symbol' }}
+    </h3>
+    <h3 *ngIf="orderDetails.length === 0">
+      No se encontraron productos para esta orden.
+    </h3>
+  </div>
+</div>

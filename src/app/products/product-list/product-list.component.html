@@ -1,9 +1,25 @@
-<div class="product-list">
-    <h2>Productos Disponibles</h2>
-    <div *ngFor="let product of products" class="product-item">
-      <h3><a [routerLink]="['/producto', product.slug]">{{ product.nombre }}</a></h3>
-      <p>Precio: {{ product.precio | currency }}</p>
-      <p>Stock: {{ product.stock }}</p>
-      <p>Categoría: {{ product.metaData.categoria }}</p>
+<div class="container padding-container">
+  <div class="row">
+    <div *ngFor="let product of products" class="col-lg-4 col-md-6">
+      <div class="card rounded-0 p-0 mb-5">
+        <img [src]="product.imagenUrl ? 'images/products/' + product.imagenUrl : 'images/products/default.webp'" alt="{{ product.nombre }}" class="img-fluid">
+
+        <div class="card-body" style="text-align: center;">
+          <a [routerLink]="['/producto', product.slug]"><h4 class="mt-3 mb-0">{{ product.nombre }}</h4></a>
+          <p class=" mb-2">{{ product.nombreCategoria }}</p>
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <i class="ti-wallet mr-2 text-color"></i> Precio:
+            </li>
+            <li class="list-inline-item text-black">
+              <strong> {{ product.precio | currency }}</strong>
+            </li>
+          </ul>
+          <div class="mt-3">
+						<a [routerLink]="['/producto', product.slug]" class="btn btn-main">Ver Producto</a>
+					</div>
+        </div>
+      </div>
     </div>
   </div>
+</div>

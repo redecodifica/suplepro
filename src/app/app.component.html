@@ -4,7 +4,7 @@
 			<h2 class="text-white text-capitalize">Suple<span class="text-color">Pro</span></h2>
 		</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsid"
-			aria-controls="navbarsid" aria-expanded="false" aria-label="Toggle navigation">
+			aria-controls="navbarsid" aria-expanded="false" aria-label="Toggle navigation" style="background: #fff;">
 			<span class="ti-view-list"></span>
 		</button>
 		<div class="collapse text-center navbar-collapse" id="navbarsid">
@@ -17,13 +17,18 @@
 			</ul>
 			<div class="my-md-0 ml-lg-4 mt-4 mt-lg-0 ml-auto text-lg-right mb-3 mb-lg-0">
 				<!-- Iconos de cuenta y cesta -->
-        <div class="flex-ca" style="display: flex; gap: 20px;">
-          <a routerLink="/cuenta" class="me-3 text-decoration-none" style="color: #fff;">
-            <i class="fas fa-user"></i> Cuenta
-          </a>
-          <a routerLink="/cesta" class="text-decoration-none" style="color: #fff;">
-            <i class="fas fa-shopping-cart"></i> Cesta
-          </a>
+        <div class="flex-ca" style="display: flex; gap: 20px; justify-content: center;">
+			<a *ngIf="!currentUser" (click)="openAuthModal()" class="me-3 text-decoration-none" style="color: #fff;" data-toggle="modal" data-target="#authModal">
+				<i class="fas fa-user"></i> Cuenta
+			  </a>
+			  <a routerLink="/cuenta" *ngIf="currentUser" class="me-3 text-decoration-none" style="color: #fff;">
+				Hola, {{ currentUser.nombreUsuario }}
+			  </a>
+
+			  <a routerLink="/cesta" class="text-decoration-none" style="color: #fff;">
+				<i class="fas fa-shopping-cart"></i> Cesta
+				<span class="badge badge-light">{{ cartItemCount }}</span>
+			  </a>
         </div>
 			</div>
 		</div>
@@ -31,7 +36,7 @@
 </nav>
 
 <router-outlet> </router-outlet>
-
+<app-auth-modal></app-auth-modal>
 <!-- footer Start -->
 <footer class="footer bg-black-50">
 	<div class="container">

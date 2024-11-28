@@ -18,13 +18,24 @@ export class CategoryDetailComponent implements OnInit {
   categorySlug: string | null = null;
   categoryName: string = 'Tienda';
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private productService: ProductService) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.categorySlug = params.get('category');
       if (this.categorySlug) {
-        this.categoryName = this.categorySlug;
+        // Obtener el nombre legible de la categoría basado en el slug
+        this.productService.getCategories().subscribe(
+          (categories) => {
+            const category = categories.find(cat => cat.slug === this.categorySlug);
+            if (category) {
+              this.categoryName = category.nombre;
+            }
+          },
+          (error) => {
+            console.error('Error al obtener las categorías:', error);
+          }
+        );
       } else {
         this.categoryName = 'Tienda';
       }

@@ -8,6 +8,8 @@ import { ContactanosComponent } from './contactanos/contactanos.component';
 import { ProductListComponent } from './products/product-list/product-list.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import { CategoryDetailComponent } from './categories/category-detail/category-detail.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { OrderDetailComponent } from './cuenta/order-detail/order-detail.component';
 
 
 export const routes: Routes = [
@@ -21,4 +23,6 @@ export const routes: Routes = [
 { path: 'producto/:slug', component: ProductDetailComponent },
 { path: 'tienda', component: CategoryDetailComponent },
 { path: 'tienda/categoria/:category', component: CategoryDetailComponent },
+{ path: 'checkout', component: CheckoutComponent },
+{ path: 'cuenta/order-details/:id', component: OrderDetailComponent },
 ];

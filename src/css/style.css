@@ -14,7 +14,10 @@ body {
   font-size: 16px;
   color: rgba(0, 0, 0, 0.6);
 }
-
+.padding-container{
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   font-family: "Barlow Condensed", sans-serif;
   font-weight: 700;
@@ -94,18 +97,17 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
 .btn {
   display: inline-block;
   font-size: 14px;
-  letter-spacing: 1px;
   padding: 18px 35px;
   text-transform: uppercase;
   border-radius: 0;
   font-weight: 700;
-  transition: all 0.5s ease;
+  transition: all 0.5s ease !important;
   border: 1px solid transparent;
 }
 
 .btn-main, .btn-small, .btn-transparent {
   background: linear-gradient(90deg, rgb(245, 99, 75) 0%, #fe9418 100%);
-  color: #fff;
+  color: #fff !important;
 }
 .btn-main:hover, .btn-small:hover, .btn-transparent:hover {
   background: linear-gradient(90deg, #fe9418 0%, rgb(245, 99, 75) 100%);

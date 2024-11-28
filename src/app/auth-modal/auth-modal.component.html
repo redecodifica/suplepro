@@ -1,0 +1,48 @@
+<div id="authModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ showLogin ? 'Iniciar Sesión' : 'Registro' }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="showLogin; else registerForm">
+          <form (ngSubmit)="login()">
+            <div class="form-group">
+              <label for="loginEmail">Correo</label>
+              <input type="email" id="loginEmail" class="form-control" [(ngModel)]="loginData.correo" required name="correo">
+            </div>
+            <div class="form-group">
+              <label for="loginPassword">Contraseña</label>
+              <input type="password" id="loginPassword" class="form-control" [(ngModel)]="loginData.contrasena" required name="contrasena">
+            </div>
+            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+          </form>
+          <p class="text-danger mt-2" *ngIf="errorMessage">{{ errorMessage }}</p>
+          <p class="mt-3">¿No tienes cuenta? <a (click)="switchToRegister()">Regístrate aquí</a></p>
+        </div>
+        <ng-template #registerForm>
+          <form (ngSubmit)="register()">
+            <div class="form-group">
+              <label for="registerUsername">Nombre de Usuario</label>
+              <input type="text" id="registerUsername" class="form-control" [(ngModel)]="registerData.nombreUsuario" required name="nombreUsuario">
+            </div>
+            <div class="form-group">
+              <label for="registerEmail">Correo</label>
+              <input type="email" id="registerEmail" class="form-control" [(ngModel)]="registerData.correo" required name="correo">
+            </div>
+            <div class="form-group">
+              <label for="registerPassword">Contraseña</label>
+              <input type="password" id="registerPassword" class="form-control" [(ngModel)]="registerData.contrasena" required name="contrasena">
+            </div>
+            <button type="submit" class="btn btn-success">Registrarse</button>
+          </form>
+          <p class="text-danger mt-2" *ngIf="errorMessage">{{ errorMessage }}</p>
+          <p class="mt-3">¿Ya tienes cuenta? <a (click)="switchToLogin()">Inicia sesión aquí</a></p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

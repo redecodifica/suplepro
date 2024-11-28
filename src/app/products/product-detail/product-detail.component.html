@@ -1,8 +1,41 @@
 <app-header [breadcrumb]="product?.nombre" [title]="product?.nombre"></app-header>
-<div *ngIf="product">
-    <h2>{{ product.nombre }}</h2>
-    <p>Precio: {{ product.precio | currency }}</p>
-    <p>Stock: {{ product.stock }}</p>
-    <p>Categoría: {{ product.metaData.categoria }}</p>
-    <p>Estado: {{ product.estado }}</p>
+<div class="container padding-container">
+  <div class="text-center mt-3">
+    <div *ngIf="showAddedMessage" class="alert alert-success mt-3">
+      ¡Producto añadido con éxito al carrito!
+    </div>
+  </div>
+  <div *ngIf="product" class="row">
+    <div class="col-lg-7 col-md-12">
+      <div class="single-course">
+        <img [src]="product.imagenUrl ? 'images/products/' + product.imagenUrl : 'images/products/default.webp'" alt="{{ product.nombre }}" class="img-fluid">
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="course-widget border py-4 px-2 mt-5 mt-lg-0">
+        <h3 class="text-center mb-3">{{ product.nombre }}</h3>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item d-flex justify-content-between align-items-center text-black">
+            Categoría<span class="text-black-50">{{ product.metaData.categoria }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center text-black">
+            Precio<span class="text-black-50">{{ product.precio | currency }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center text-black">
+            Stock<span class="text-black-50">{{ product.stock }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center text-black">
+            Estado<span class="text-black-50">{{ product.estado }}</span>
+          </li>
+          <!-- Añadir los atributos meta del producto -->
+          <li *ngFor="let attribute of productAttributes" class="list-group-item d-flex justify-content-between align-items-center text-black">
+            {{ attribute.clave | titlecase }}<span class="text-black-50">{{ attribute.valor }}</span>
+          </li>
+        </ul>
+        <div class="text-center mt-3">
+          <button (click)="addToCart()" class="btn btn-main">Añadir a Cesta</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
