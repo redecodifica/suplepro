@@ -6,7 +6,8 @@
         <p><strong>Correo:</strong> {{ user.correo }}</p>
         <p><strong>Rol:</strong> {{ user.rol }}</p>
         <button (click)="logout()" class="btn btn-danger mt-3">Cerrar Sesión</button>
-
+        <a [routerLink]="['/cuenta/editar-usuario']" class="btn btn-primary mt-3">Editar Usuario</a>
+        
         <h3 class="mt-4">Mis Órdenes</h3>
         <div *ngIf="orders.length === 0">
         <p>No tienes órdenes aún.</p>

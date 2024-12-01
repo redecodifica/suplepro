@@ -19,12 +19,17 @@ export class OrderService {
     return this.http.post<any>(this.orderDetailsUrl, orderDetail);
   }
 
-  // Método para obtener los pedidos de un usuario específico
+  // Obtener todas las órdenes (para Solución 1)
+  getOrders(): Observable<any[]> {
+    return this.http.get<any[]>(this.ordersUrl);
+  }
+
+  // Obtener órdenes por usuario
   getOrdersByUserId(userId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.ordersUrl}?cliente.id=${userId}`);
   }
 
-  // Método para obtener los detalles de una orden específica por su ID
+  // Obtener detalles de una orden por ID
   getOrderDetailsByOrderId(orderId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.orderDetailsUrl}?pedido.id=${orderId}`);
   }

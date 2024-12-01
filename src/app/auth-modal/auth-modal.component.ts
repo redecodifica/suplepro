@@ -64,16 +64,20 @@ export class AuthModalComponent implements OnInit {
   register(): void {
     this.authService.register(this.registerData).subscribe(
       user => {
-        this.authService.setCurrentUser(user);
-        $('#authModal').modal('hide'); // Cerrar el modal con jQuery
+        if (user) {
+          this.authService.setCurrentUser(user);
+          $('#authModal').modal('hide'); // Cerrar el modal con jQuery
 
-        // Redirigir según la URL de redirección
-        const redirectUrl = this.authService.getRedirectUrl();
-        if (redirectUrl) {
-          this.authService.clearRedirectUrl();
-          this.router.navigateByUrl(redirectUrl); // Redirigir al checkout
+          // Redirigir según la URL de redirección
+          const redirectUrl = this.authService.getRedirectUrl();
+          if (redirectUrl) {
+            this.authService.clearRedirectUrl();
+            this.router.navigateByUrl(redirectUrl); // Redirigir al checkout
+          } else {
+            this.router.navigate(['/cuenta']); // Redirigir al usuario a la cuenta por defecto
+          }
         } else {
-          this.router.navigate(['/cuenta']); // Redirigir al usuario a la cuenta por defecto
+          this.errorMessage = 'Error al intentar registrarse. Por favor, inténtalo de nuevo.';
         }
       },
       error => {

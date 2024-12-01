@@ -10,6 +10,7 @@ import { ProductDetailComponent } from './products/product-detail/product-detail
 import { CategoryDetailComponent } from './categories/category-detail/category-detail.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { OrderDetailComponent } from './cuenta/order-detail/order-detail.component';
+import { EditarUsuarioComponent } from './cuenta/editar-usuario/editar-usuario.component';
 
 
 export const routes: Routes = [
@@ -25,4 +26,5 @@ export const routes: Routes = [
 { path: 'tienda/categoria/:category', component: CategoryDetailComponent },
 { path: 'checkout', component: CheckoutComponent },
 { path: 'cuenta/order-details/:id', component: OrderDetailComponent },
+{ path: 'cuenta/editar-usuario', component: EditarUsuarioComponent }
 ];

@@ -24,11 +24,12 @@ export class CuentaComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService.getCurrentUser();
-
+  
     if (this.user) {
-      this.orderService.getOrdersByUserId(this.user.id).subscribe(
+      this.orderService.getOrders().subscribe(
         (orders) => {
-          this.orders = orders;
+          // Filtrar solo las órdenes que pertenecen al usuario actual
+          this.orders = orders.filter(order => order.cliente.id === this.user.id);
         },
         (error) => {
           console.error('Error al obtener las órdenes del usuario:', error);

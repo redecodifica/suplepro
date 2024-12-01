@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class AuthService {
   private apiUrl = 'http://localhost:8092/api/users';
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser$: Observable<any>;
-  private redirectUrl: string | null = null; // Nueva propiedad para la URL de redirección
+  private redirectUrl: string | null = null;
 
   constructor(private http: HttpClient) {
     const storedUser = localStorage.getItem('currentUser');
@@ -18,28 +19,49 @@ export class AuthService {
   }
 
   login(correo: string, contrasena: string): Observable<any> {
-    return this.http.get<any[]>(`${this.apiUrl}?correo=${correo}&contrasena=${contrasena}`).pipe(
-      map(users => {
-        // Filtrar los usuarios que coincidan con el correo y la contraseña proporcionados
-        const user = users.find(u => u.correo === correo && u.contrasena === contrasena);
+    return this.http.get<any>(`${this.apiUrl}/email/${correo}`).pipe(
+      switchMap(user => {
         if (user) {
-          this.setCurrentUser(user);
+          // Utilizamos el endpoint verify-password para verificar la contraseña encriptada
+          const payload = {
+            rawPassword: contrasena,
+            hashedPassword: user.contrasena
+          };
 
-          // Redirigir al usuario según la URL almacenada (si existe)
-          if (this.redirectUrl) {
-            window.location.href = this.redirectUrl;
-            this.redirectUrl = null; // Limpiar la URL de redirección después de usarla
-          } else {
-            window.location.href = '/cuenta'; // Redirigir a la página de cuenta por defecto
-          }
+          return this.http.post<boolean>(`${this.apiUrl}/verify-password`, payload).pipe(
+            map(isPasswordValid => {
+              if (isPasswordValid) {
+                this.setCurrentUser(user);
+
+                // Redirigir al usuario según la URL almacenada (si existe)
+                if (this.redirectUrl) {
+                  window.location.href = this.redirectUrl;
+                  this.redirectUrl = null; // Limpiar la URL de redirección después de usarla
+                } else {
+                  window.location.href = '/cuenta'; // Redirigir a la página de cuenta por defecto
+                }
+                return user;
+              } else {
+                return null;
+              }
+            })
+          );
+        } else {
+          return new Observable(subscriber => subscriber.next(null));
         }
-        return user ? user : null;
       })
     );
   }
 
   register(newUser: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, newUser);
+    // Ajustamos el endpoint del registro asegurándonos de llamar a `/register`
+    return this.http.post<any>(`${this.apiUrl}/register`, newUser).pipe(
+      map(registeredUser => {
+        // En este punto ya se ha registrado el usuario en el backend, el cual ya encripta la contraseña
+        this.setCurrentUser(registeredUser);
+        return registeredUser;
+      })
+    );
   }
 
   setCurrentUser(user: any): void {

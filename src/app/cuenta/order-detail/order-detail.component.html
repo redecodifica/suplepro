@@ -13,9 +13,9 @@
     <tbody>
       <tr *ngFor="let detail of orderDetails">
         <td>{{ detail.producto.nombre }}</td>
-        <td>{{ detail.producto.precio | currency: 'PEN': 'symbol' }}</td>
+        <td>{{ detail.precio / detail.cantidad  | currency: 'PEN': 'symbol' }}</td>
         <td>{{ detail.cantidad }}</td>
-        <td>{{ (detail.precio * detail.cantidad) | currency: 'PEN': 'symbol' }}</td>
+        <td>{{ (detail.precio ) | currency: 'PEN': 'symbol' }}</td>
       </tr>
     </tbody>
   </table>
